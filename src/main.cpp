@@ -9,6 +9,8 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 using std::string;
 using std::vector;
+using std::endl;
+using std::cout;
 
 // for convenience
 using json = nlohmann::json;
@@ -126,7 +128,7 @@ int main() {
           estimate(3) = v2;
         
           estimations.push_back(estimate);
-
+          
           VectorXd RMSE = tools.CalculateRMSE(estimations, ground_truth);
 
           json msgJson;
@@ -139,7 +141,7 @@ int main() {
           auto msg = "42[\"estimate_marker\"," + msgJson.dump() + "]";
           // std::cout << msg << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
-
+         
         }  // end "telemetry" if
 
       } else {
@@ -161,6 +163,7 @@ int main() {
   });
 
   int port = 4567;
+  //int port = 3000;
   if (h.listen(port)) {
     std::cout << "Listening to port " << port << std::endl;
   } else {
